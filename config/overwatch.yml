@@ -1,0 +1,6 @@
+collection:
+  storage:
+    adapter: 'redis'
+    db: '10'
+    host: 'localhost'
+    port: '6379'

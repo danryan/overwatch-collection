@@ -1,0 +1,31 @@
+source 'http://rubygems.org'
+
+gem 'dm-core', '>= 1.1.0'
+gem 'dm-active_model', '>= 1.1.0'
+gem 'dm-redis-adapter', '>= 0.4.0'
+gem 'dm-serializer', '>= 1.1.0'
+gem 'dm-timestamps', '>= 1.1.0'
+gem 'dm-validations', '>= 1.1.0'
+gem 'dm-types', '>= 1.1.0'
+gem 'yajl-ruby', :require => 'yajl'
+gem 'hashie'
+gem 'rest-client'
+gem 'sinatra' 
+gem 'sinatra-logger', :require => 'sinatra/logger'
+gem 'activesupport', :require => 'active_support/all'
+
+group :development, :test do
+  gem 'tux'
+  gem 'ripl-irb'
+  # gem 'sinatra-reloader' #, :require => 'sinatra/reloader'
+  gem 'rspec', '>= 2.6.0'
+  gem 'rack-test', '>= 0.6.0', :require => 'rack/test'
+  gem 'spork', '>= 0.9.0.rc8'
+  gem 'watchr', '>= 0.7'
+  gem 'ruby-debug-base19', '0.11.24'
+  gem 'ruby-debug19', '0.11.6'
+  gem 'factory_girl'
+  gem 'capybara'
+  gem 'json_spec'
+  gem "timecop", ">= 0.3.5"
+end
