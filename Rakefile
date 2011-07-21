@@ -32,26 +32,11 @@ YARD::Rake::YardocTask.new do |t|
   t.files = [ 'lib/**/*.rb' ]
 end
 
-# namespace :resque do
-  # task :setup do
-    # require 'resque'
-    # require 'resque_scheduler'
-    # require 'resque/scheduler'
-    
-    # Resque.redis = 'localhost:6379'
-    
-    # Resque.schedule = YAML.load_file(
-      # File.join(File.expand_path(File.dirname(__FILE__)), 'config/schedule.yml')
-    # )
-  
-  # end
-# end    
-
 namespace :overwatch do
   namespace :test do 
     task :snapshot => :environment do
-      a = Asset.first
-      a.snapshots.create(:raw_data => {:one => rand(10), :two => { :three => rand(10) }})
+      a = Resource.first
+      a.snapshots.create(:data => {:one => rand(10), :two => { :three => rand(10) }})
     end
   end
 end

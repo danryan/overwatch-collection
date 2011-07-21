@@ -1,6 +1,15 @@
 
+## Installation
 
+You can install overwatch-collection as a gem:
 
+    gem install overwatch-collection
+
+Or download the source:
+
+    git clone https://github.com/danryan/overwatch-collection.git
+    
+### 
 ## Features
 
 ### Resources
@@ -21,6 +30,5 @@ Snapshots are also broken up and saved as individual attribute/value pairs, whic
 * Log to STDOUT like a proper service.
 * Callbacks! Decide what happens after data gets collected.
 * Taggable resources and snapshots
-## TODO
-
 * Let config file be, er, configurable
+* Add a User model for authentication/authorization
