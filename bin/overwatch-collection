@@ -1,0 +1,38 @@
+#!/usr/bin/env ruby
+
+$: << File.expand_path(File.dirname(__FILE__) + "/../lib")
+
+require 'overwatch/collection'
+require 'rubygems'
+require 'gli'
+
+include GLI
+
+version Overwatch::Collection::VERSION
+
+desc 'Start overwatch-collection server'
+command :start do |c|
+  c.desc 'Port to which to bind'
+  c.arg_name '[PORT]'
+  c.default_value '9001'
+  c.flag [:p, :port]
+  
+  c.desc 'Host on which to run'
+  c.arg_name '[HOST]'
+  c.default_value 'localhost'
+  c.flag [:h, :host]
+  
+  c.desc 'Config file'
+  c.arg_name '[CONFIG]'
+  c.default_value File.expand_path(File.join(File.dirname(__FILE__), "/../config/overwatch.yml"))
+  c.flag [:c, :config]
+  
+  c.action do |global_options, options, args|
+    Overwatch.config_path = options[:c]
+    Overwatch::Collection::Application.run! :host => options[:h], :port => options[:p].to_i
+  end
+  
+end
+  
+  
+exit run(ARGV)
