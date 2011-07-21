@@ -1,6 +1,8 @@
 require 'bundler'
 Bundler.require(:default)
 
+require File.expand_path(File.join(File.dirname(__FILE__), "collection/version"))
+
 require File.expand_path(File.join(File.dirname(__FILE__), "collection/attributes"))
 require File.expand_path(File.join(File.dirname(__FILE__), "collection/models/resource"))
 require File.expand_path(File.join(File.dirname(__FILE__), "collection/models/snapshot"))
@@ -8,9 +10,7 @@ require File.expand_path(File.join(File.dirname(__FILE__), "collection/applicati
 
 module Overwatch
   module Collection
-    VERSION = "0.0.3"
-  end
-  
+  end  
   class << self
     def config_path=(path)
       @config_path = path
