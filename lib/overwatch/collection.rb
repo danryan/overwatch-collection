@@ -1,12 +1,13 @@
 require 'bundler'
 Bundler.require(:default)
 
+$: << File.join(File.dirname(__FILE__), ".")
+
 require 'overwatch/collection/version'
 require 'overwatch/collection/attributes'
 require 'overwatch/collection/models/resource'
 require 'overwatch/collection/models/snapshot'
 require 'overwatch/collection/application'
-
 
 module Overwatch
   class << self
