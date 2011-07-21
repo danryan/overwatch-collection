@@ -11,7 +11,7 @@ Gem::Specification.new do |s|
   s.email             = [ "dan@appliedawesome.com" ]
   s.homepage          = "https://github.com/danryan/overwatch-client"
   s.summary           = "Overwatch statistical time series collection app"
-  s.description       = "overwatch-collection is a Redis-backed statistical time series collection application designed to be fast, extensib, and easy to use."
+  s.description       = "overwatch-collection is a Redis-backed statistical time series collection application designed to be fast, extensible, and easy to use."
   
   s.rubyforge_project = "overwatch-collection"
   s.files             = `git ls-files`.split("\n")
