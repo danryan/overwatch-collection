@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.platform          = Gem::Platform::RUBY
   s.authors           = [ "Dan Ryan" ]
   s.email             = [ "dan@appliedawesome.com" ]
-  s.homepage          = "https://github.com/danryan/overwatch-client"
+  s.homepage          = "https://github.com/danryan/overwatch-collection"
   s.summary           = "Overwatch statistical time series collection app"
   s.description       = "overwatch-collection is a Redis-backed statistical time series collection application designed to be fast, extensible, and easy to use."
   
