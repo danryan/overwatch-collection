@@ -66,7 +66,7 @@ module Overwatch
 
     def parse_data
       self.to_dotted_hash.each_pair do |key, value|
-        timestamp = self.created_at.to_i
+        timestamp = self.created_at.to_i * 1000
         $redis.zadd "overwatch::resource:#{resource.id}:#{key}", timestamp, "#{timestamp}:#{value}"
       end    
     end

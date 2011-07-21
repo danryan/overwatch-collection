@@ -4,7 +4,7 @@ module Overwatch
       
       get '/resources/?' do
         resources = Resource.all
-        if resources.size == 0
+        if resources.size < 1
           [].to_json
         else
           resources.to_json

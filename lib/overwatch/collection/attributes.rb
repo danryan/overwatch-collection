@@ -59,10 +59,10 @@ module Overwatch
 
       def values_for(attr, options={})
         raise ArgumentError, "attribute does not exist" unless attribute_keys.include?(attr)
-        start_at = options[:start_at] || (Time.now - 1.day).to_i.to_s
-        end_at = options[:end_at] || Time.now.to_i.to_s
+        start_at = options[:start_at] ||  "-inf" #(Time.now - 1.day).to_i.to_s
+        end_at = options[:end_at] || "+inf"
         interval = options[:interval]
-        values = $redis.zrangebyscore("resource:#{self.id}:#{attr}", start_at, end_at)
+        values = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", start_at, end_at)
         values.map! do |v|
           val = v.split(":")[1]
           is_a_number?(val) ? val.to_f : val
@@ -89,10 +89,10 @@ module Overwatch
 
       def values_with_dates_for(attr, options={})
         raise ArgumentError, "attribute does not exist" unless attribute_keys.include?(attr)
-        start_at = options[:start_at] || (Time.now - 1.day).to_i.to_s
-        end_at = options[:end_at] || Time.now.to_i.to_s
+        start_at = options[:start_at] || "-inf"
+        end_at = options[:end_at] || "+inf"
         interval = options[:interval]
-        values = $redis.zrangebyscore("resource:#{self.id}:#{attr}", start_at, end_at)
+        values = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", start_at, end_at)
         values.map! do |v|
           val = v.split(":")
           [ val[0].to_i * 1000, is_a_number?(val[1]) ? val[1].to_f : val[1] ]

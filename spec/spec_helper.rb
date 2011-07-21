@@ -25,7 +25,7 @@ Spork.prefork do
     end
     
     config.before :each do
-      Timecop.freeze(Time.local(2011, 1, 1, 0, 0, 0))
+      Timecop.freeze(Time.now) #(Time.local(2011, 1, 1, 0, 0, 0))
       header 'Accept', 'application/json'
       header 'Content-Type', 'application/json'
       $redis.flushdb

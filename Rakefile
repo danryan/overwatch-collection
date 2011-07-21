@@ -6,12 +6,22 @@ require 'rake'
 # require 'resque/tasks'
 # require 'resque_scheduler/tasks'    
 
+require 'rspec/core/rake_task'
 
+desc "Run specs"
+RSpec::Core::RakeTask.new do |task|
+  task.pattern = "spec/**/*_spec.rb"
+end
+  
 desc "Run watchr"
 task :watchr do
   sh %{bundle exec watchr .watchr}
 end
 
+desc "Run spork"
+task :spork do
+  sh %{bundle exec spork}
+end
 
 # namespace :resque do
   # task :setup do

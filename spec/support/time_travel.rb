@@ -1,3 +1,3 @@
-def time_travel!
-  Timecop.travel(Time.now + 1.minute)
+def time_travel!(future=(Time.now + 1.minute))
+  Timecop.travel(future)
 end

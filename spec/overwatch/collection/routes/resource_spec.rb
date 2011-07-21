@@ -82,7 +82,7 @@ module Overwatch
       describe "GET /resources/:id/attributes" do
         let(:resource) { Overwatch::Resource.create(:name => 'foo') }
         before do
-          resource.snapshots.create(:raw_data => { :one => 1, :two => 2 })
+          resource.snapshots.create(:data => snapshot_data)
           get "/resources/#{resource.id}/attributes"
         end
         
@@ -92,19 +92,18 @@ module Overwatch
         it { should respond_with_content_type 'application/json' }
         
         it "should return an array of available attributes" do
-          attributes = Yajl.load(last_response.body)
-          attributes.should == ["one", "two"]
+          attributes = last_json
+          attributes.should include("load_average.one_minute")
         end
       end
       
       describe "GET /resources/:id/attributes/:attribute" do
         let(:resource) { Overwatch::Resource.create(:name => 'foo') }
         before do
-          Timecop.travel(Time.local(2011, 7, 20, 12, 1, 0))
-          resource.snapshots.create(:raw_data => { :one => 1, :two => 2 })
-          Timecop.travel(Time.local(2011, 7, 20, 12, 2, 0))
-          resource.snapshots.create(:raw_data => { :one => 1, :two => 2 })
-          get "/resources/#{resource.id}/attributes/one"
+          resource.snapshots.create(:data => snapshot_data)
+          time_travel!
+          resource.snapshots.create(:data => snapshot_data)
+          get "/resources/#{resource.id}/attributes/load_average.one_minute"
         end
         
         subject { last_response }
@@ -113,9 +112,32 @@ module Overwatch
         it { should respond_with_content_type 'application/json' }
         
         it "should return a hash of the attribute name and values" do
-          values = Yajl.load(last_response.body)
-          values['name'].should eq "one"
-          puts resource.snapshots.inspect
+          values = last_json
+          values.should include('data')
+          values.should include('name')
+          values['name'].should eq "load_average.one_minute"
+        end
+      end
+      
+      describe "GET /resources/:id/attributes/:attribute" do
+        let(:resource) { Overwatch::Resource.create(:name => 'foo') }
+        before do
+          resource.snapshots.create(:data => snapshot_data)
+          time_travel!
+          resource.snapshots.create(:data => snapshot_data)
+          get "/resources/#{resource.id}/attributes/load_average.one_minute?start_at=#{(Time.now - 1.hour).to_i * 1000}&end=#{(Time.now ).to_i * 1000}"
+        end
+        
+        subject { last_response }
+        
+        it { should respond_with 200 }
+        it { should respond_with_content_type 'application/json' }
+        
+        it "should return a hash of the attribute name and values" do
+          values = last_json
+          values.should include('data')
+          values.should include('name')
+          values['name'].should eq "load_average.one_minute"
         end
       end
       
