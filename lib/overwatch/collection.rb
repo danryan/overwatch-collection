@@ -1,6 +1,20 @@
 require 'bundler'
 Bundler.require(:default)
 
+# require 'dm-core'
+# require 'dm-active_model'
+# require 'dm-redis-adapter'
+# require 'dm-serializer'
+# require 'dm-timestamps'
+# require 'dm-validations'
+# require 'dm-types'
+# require 'yajl'
+# require 'hashie'
+# require 'rest-client'
+# require 'sinatra'
+# require 'sinatra/logger'
+# require 'activesupport/all'
+
 require File.expand_path(File.join(File.dirname(__FILE__), "collection/version"))
 
 require File.expand_path(File.join(File.dirname(__FILE__), "collection/attributes"))
