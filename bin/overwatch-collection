@@ -3,7 +3,6 @@
 $: << File.expand_path(File.dirname(__FILE__) + "/../lib")
 
 require 'overwatch/collection'
-require 'rubygems'
 require 'gli'
 
 include GLI
