@@ -42,5 +42,5 @@ module Overwatch
   end
 end
 
-require 'overwatch/collection/routes/resource'
-require 'overwatch/collection/routes/snapshot'
+require File.expand_path(File.join(File.dirname(__FILE__), "routes/resource"))
+require File.expand_path(File.join(File.dirname(__FILE__), "routes/snapshot"))

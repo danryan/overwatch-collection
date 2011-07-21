@@ -14,6 +14,7 @@ gem 'sinatra', '>= 1.2.6'
 gem 'sinatra-logger', '>= 0.1.1', :require => 'sinatra/logger'
 gem 'activesupport', '>= 3.0.9', :require => 'active_support/all'
 gem 'gli', '>= 1.3.2'
+
 group :development, :test do
   gem 'rspec', '>= 2.6.0'
   gem 'rack-test', '>= 0.6.0', :require => 'rack/test'
@@ -22,4 +23,11 @@ group :development, :test do
   gem 'factory_girl', '>= 1.3.3'
   gem 'json_spec', '>= 0.5.0'
   gem "timecop", ">= 0.3.5"
+end
+
+
+group :doc do
+  gem 'yard'
+  # gem 'rdiscount'
+  gem 'yard-dm', '>= 0'
 end

@@ -4,7 +4,6 @@ module Overwatch
     
     property :id, Serial, :index => true
     property :data, Json
-    # property :raw_data, Json
     property :created_at, DateTime
     property :updated_at, DateTime
     property :created_on, Date
@@ -48,7 +47,6 @@ module Overwatch
       end
     end
 
-    # Usage: to_dotted_hash({:one => :two}) # => "one.two"
     def to_dotted_hash(source=self.data,target = {}, namespace = nil)
       prefix = "#{namespace}." if namespace
       case source

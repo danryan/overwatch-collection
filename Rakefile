@@ -25,6 +25,13 @@ task :spork do
   sh %{bundle exec spork}
 end
 
+
+Bundler.require(:doc)
+desc "Generate documentation"
+YARD::Rake::YardocTask.new do |t|
+  t.files = [ 'lib/**/*.rb' ]
+end
+
 # namespace :resque do
   # task :setup do
     # require 'resque'

@@ -1,15 +1,16 @@
 require 'bundler'
 Bundler.require(:default)
 
-$: << File.join(File.dirname(__FILE__), ".")
-
-require 'overwatch/collection/version'
-require 'overwatch/collection/attributes'
-require 'overwatch/collection/models/resource'
-require 'overwatch/collection/models/snapshot'
-require 'overwatch/collection/application'
+require File.expand_path(File.join(File.dirname(__FILE__), "collection/attributes"))
+require File.expand_path(File.join(File.dirname(__FILE__), "collection/models/resource"))
+require File.expand_path(File.join(File.dirname(__FILE__), "collection/models/snapshot"))
+require File.expand_path(File.join(File.dirname(__FILE__), "collection/application"))
 
 module Overwatch
+  module Collection
+    VERSION = "0.0.3"
+  end
+  
   class << self
     def config_path=(path)
       @config_path = path
@@ -24,10 +25,7 @@ module Overwatch
       @config.merge!(YAML.load_file(config_path))
     end
   end
-  
-  module Collection
-    
-  end
+
 end
 
 $redis = Redis.new(
