@@ -7,7 +7,8 @@ module Overwatch
         if resources.size < 1
           [].to_json
         else
-          resources.to_json(:exclude => [ :created_at, :updated_at ])
+          status 200
+          resources.to_json# (:exclude => [ :created_at, :updated_at ])
         end
       end
       
@@ -15,9 +16,10 @@ module Overwatch
         resource = Resource.get(id) || Resource.first(:name => id)
         if resource
           status 200
-          resource.to_json(:exclude => [ :created_at, :updated_at ])
+          resource.to_json# (:exclude => [ :created_at, :updated_at ])
         else
-          halt 404
+          status 404
+          ["Not found"].to_json
         end
         
       end
@@ -28,10 +30,10 @@ module Overwatch
         resource = Resource.new(:name => data['name'])
         if resource.save
           status 201
-          resource.to_json(:exclude => [ :created_at, :updated_at ])
+          resource.to_json # (:exclude => [ :created_at, :updated_at ])
         else
-          body resource.errors.to_json
           status 422
+          resource.errors.to_json
         end
       end
 
@@ -41,13 +43,14 @@ module Overwatch
         if resource
           if resource.update(data)
             status 200
-            resource.to_json(:exclude => [ :created_at, :updated_at ])
+            resource.to_json# (:exclude => [ :created_at, :updated_at ])
           else
             status 409
             resource.errors.to_json
           end
         else
-          halt 404
+          status 404
+          ["Not found"].to_json
         end
           
       end
@@ -69,11 +72,16 @@ module Overwatch
       
       get '/resources/:id/attributes/?' do |id|
         resource = Resource.get(id) || Resource.first(:name => id)
-        attributes = resource.attribute_keys
-        if attributes.length < 1
-          [].to_json
+        if resource
+          attributes = resource.attribute_keys
+          if attributes.length < 1
+            [].to_json
+          else
+            attributes.sort.to_json
+          end
         else
-          attributes.sort.to_json
+          status 404
+          ["Not found"].to_json
         end
       end
       
