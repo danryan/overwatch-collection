@@ -7,15 +7,15 @@ module Overwatch
         if resources.size < 1
           [].to_json
         else
-          resources.to_json
+          resources.to_json(:exclude => [ :created_at, :updated_at ])
         end
       end
       
       get '/resources/:id/?' do |id|
-        resource = Resource.get(id)
+        resource = Resource.get(id) || Resource.first(:name => id)
         if resource
           status 200
-          resource.to_json
+          resource.to_json(:exclude => [ :created_at, :updated_at ])
         else
           halt 404
         end
@@ -23,24 +23,25 @@ module Overwatch
       end
       
       post '/resources/?' do
+        # logger.info request.body.read
         data = Yajl.load(request.body.read)
         resource = Resource.new(:name => data['name'])
         if resource.save
           status 201
-          resource.to_json
+          resource.to_json(:exclude => [ :created_at, :updated_at ])
         else
+          body resource.errors.to_json
           status 422
-          resource.errors.to_json
         end
       end
 
       put '/resources/:id/?' do |id|
         data = Yajl.load(request.body.read)
-        resource = Resource.get(id)
+        resource = Resource.get(id) || Resource.first(:name => id)
         if resource
           if resource.update(data)
             status 200
-            resource.to_json
+            resource.to_json(:exclude => [ :created_at, :updated_at ])
           else
             status 409
             resource.errors.to_json
@@ -52,7 +53,7 @@ module Overwatch
       end
       
       delete '/resources/:id/?' do |id|
-        resource = Resource.get(id)
+        resource = Resource.get(id) || Resource.first(:name => id)
         if resource
           if resource.destroy
             status 200
@@ -67,7 +68,7 @@ module Overwatch
       end
       
       get '/resources/:id/attributes/?' do |id|
-        resource = Resource.get(id)
+        resource = Resource.get(id) || Resource.first(:name => id)
         attributes = resource.attribute_keys
         if attributes.length < 1
           [].to_json
@@ -77,7 +78,7 @@ module Overwatch
       end
       
       get '/resources/:id/attributes/:attribute/?' do |id, attribute|
-        resource = Resource.get(id)
+        resource = Resource.get(id) || Resource.first(:name => id)
         
         options = { 
           :start_at => (params[:start_at].to_i || nil), 
@@ -90,7 +91,7 @@ module Overwatch
       end
       
       get '/resources/:id/attributes/:attribute/:function/?' do |id, attribute, function|
-        resource = Resource.get(id)
+        resource = Resource.get(id) || Resource.first(:name => id)
         
         options = { 
           :start_at => (params[:start_at].to_i || nil), 
