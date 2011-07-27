@@ -87,13 +87,11 @@ module Overwatch
       
       get '/resources/:id/attributes/:attribute/?' do |id, attribute|
         resource = Resource.get(id) || Resource.first(:name => id)
-        
         options = { 
-          :start_at => (params[:start_at].to_i || "+inf"), 
-          :end_at => (params[:end_at].to_i || "-inf"),
-          :interval => (params[:interval].to_s || 'hour')
-        }
-        
+          :start_at => params[:start_at].present? ? params[:start_at].to_i : "-inf",
+          :end_at => params[:end_at].present? ? params[:end_at].to_i : "+inf",
+          :interval => params[:interval].present? ? params[:interval] : 'hour'
+        }        
         values = resource.values_with_dates_for(attribute, options)
         values.to_json
       end

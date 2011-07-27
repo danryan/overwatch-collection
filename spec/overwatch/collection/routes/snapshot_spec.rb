@@ -66,9 +66,7 @@ module Overwatch
         it { should respond_with 200 }
         it { should respond_with_content_type 'application/json' }
         
-        it "should return full JSON of a given snapshot" do
-          puts last_json
-        end
+        it "should return full JSON of a given snapshot"
       end
       # 
       # describe "POST /resources" do

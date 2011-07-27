@@ -31,6 +31,9 @@ module Overwatch
       end
 
       def function(func, attr, options={})
+        start_at = options[:start_at] || "-inf"
+        end_at = options[:end_at] || "+inf"
+        
         case func
         when :max
           values_for(attr, options)[:data].max
@@ -49,18 +52,18 @@ module Overwatch
           mid = values.size / 2
           values[mid]
         when :first
-          value = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", options[:start_at], options[:end_at])[0]
+          value = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", start_at, end_at)[0]
           value.split(":")[1] rescue nil
         when :last 
-          value = $redis.zrevrangebyscore("overwatch::resource:#{self.id}:#{attr}", options[:end_at], options[:start_at])[0]
+          value = $redis.zrevrangebyscore("overwatch::resource:#{self.id}:#{attr}", end_at, start_at)[0]
           value.split(":")[1] rescue nil
         end
       end
 
       def values_for(attr, options={})
         raise ArgumentError, "attribute does not exist" unless attribute_keys.include?(attr)
-        start_at = options[:start_at] || "+inf"
-        end_at = options[:end_at] || "-inf"
+        start_at = options[:start_at] || "-inf"
+        end_at = options[:end_at] || "+inf"
         interval = options[:interval]
         values = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", start_at, end_at)
         values.map! do |v|

@@ -26,7 +26,8 @@ module Overwatch
       end
       
       error DataMapper::ObjectNotFoundError do
-        halt 404
+        status 404
+        [ "Not found" ].to_json
       end
       
       before do
