@@ -89,8 +89,8 @@ module Overwatch
         resource = Resource.get(id) || Resource.first(:name => id)
         
         options = { 
-          :start_at => (params[:start_at].to_i || nil), 
-          :end_at => (params[:end_at].to_i || nil),
+          :start_at => (params[:start_at].to_i || "+inf"), 
+          :end_at => (params[:end_at].to_i || "-inf"),
           :interval => (params[:interval].to_s || 'hour')
         }
         

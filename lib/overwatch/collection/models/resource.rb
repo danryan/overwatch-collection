@@ -46,5 +46,6 @@ module Overwatch
       api_key = Digest::SHA1.hexdigest(Time.now.to_s + rand(12341234).to_s)[1..30]
       self.api_key = api_key
     end
+    
   end
 end

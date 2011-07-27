@@ -30,7 +30,7 @@ module Overwatch
       post '/snapshots/?' do
         resource = Resource.first(:api_key => params['key'])
         data = Yajl.load(request.body.read)
-        snapshot = resource.snapshots.create(:data => data)
+        snapshot = resource.snapshots.create(:data => data['data'])
         
         if resource
           if snapshot
