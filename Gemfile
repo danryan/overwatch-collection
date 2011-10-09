@@ -10,10 +10,11 @@ gem 'dm-types', '>= 1.1.0'
 gem 'yajl-ruby', '>= 0.8.2', :require => 'yajl'
 gem 'hashie', '>= 1.0.0'
 gem 'rest-client', '>= 1.6.3'
-gem 'sinatra', '>= 1.2.6'
+gem 'sinatra', '>= 1.3.0'
 gem 'sinatra-logger', '>= 0.1.1', :require => 'sinatra/logger'
 gem 'activesupport', '>= 3.0.9', :require => 'active_support/all'
-gem 'gli', '>= 1.3.2'
+gem 'clamp'
+gem 'mixlib-log', :require => 'mixlib/log'
 
 group :development, :test do
   gem 'rspec', '>= 2.6.0'
