@@ -25,7 +25,6 @@ module Overwatch
       end
       
       post '/resources/?' do
-        # logger.info request.body.read
         data = Yajl.load(request.body.read)
         resource = Resource.new(:name => data['name'])
         if resource.save
