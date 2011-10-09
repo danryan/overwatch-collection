@@ -1,27 +1,24 @@
 require 'sinatra/base'
-require 'sinatra/logger'
 # require 'sinatra/reloader' if development?
 
 module Overwatch
   module Collection
     class Application < Sinatra::Base
-      register Sinatra::Logger
       configure do
         set :app_file, __FILE__
         set :root, File.expand_path(File.join(File.dirname(__FILE__), "../../../"))
-        set :logging, true
-        set :run, false
-        set :show_exceptions, false
+        enable :logging
+        disable :run
+        disable :show_exceptions
+        disable :raise_errors, false
         set :server, %w[ thin mongrel webrick ]
-        set :raise_errors, false
         set :logger_level, :info
       end
       
       [ :development, :test].each do |env|
         configure(env) do
-          set :raise_errors, true
-          set :show_exceptions, true
-          
+          enable :raise_errors
+          enable :show_exceptions
         end
       end
       

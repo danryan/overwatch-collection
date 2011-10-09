@@ -15,12 +15,13 @@ Bundler.require(:default)
 # require 'sinatra/logger'
 # require 'activesupport/all'
 
-require File.expand_path(File.join(File.dirname(__FILE__), "collection/version"))
-
-require File.expand_path(File.join(File.dirname(__FILE__), "collection/attributes"))
-require File.expand_path(File.join(File.dirname(__FILE__), "collection/models/resource"))
-require File.expand_path(File.join(File.dirname(__FILE__), "collection/models/snapshot"))
-require File.expand_path(File.join(File.dirname(__FILE__), "collection/application"))
+require 'overwatch/collection/version'
+require 'overwatch/collection/log'
+require 'overwatch/collection/attributes'
+require 'overwatch/collection/models/resource'
+require 'overwatch/collection/models/snapshot'
+require 'overwatch/collection/application'
+require 'overwatch/collection/command'
 
 module Overwatch
   module Collection

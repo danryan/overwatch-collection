@@ -14,7 +14,8 @@ Or download the source:
 
 ### Resources
 
-One of the biggest differences
+A resource is anything you want to instrument. Typically (as with other monitoring apps), a resource is a server, but it can be anything that can send JSON over HTTP.
+
 ### Snapshots
 
 When a snapshot is recorded, it's socked away in its raw form so you can come back at a later time and review the exact state of a given resource without having to piece individual metrics together.
@@ -22,6 +23,7 @@ When a snapshot is recorded, it's socked away in its raw form so you can come ba
 ### Metrics
 
 Snapshots are also broken up and saved as individual attribute/value pairs, which enables you to track a particular attribute over a given period of time. 
+
 
 
 ## Roadmap
