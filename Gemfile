@@ -26,9 +26,7 @@ group :development, :test do
   gem "timecop", ">= 0.3.5"
 end
 
-
 group :doc do
   gem 'yard'
-  # gem 'rdiscount'
   gem 'yard-dm', '>= 0'
 end
