@@ -1,9 +1,11 @@
 require 'sinatra/base'
+# require 'sinatra/logger'
 # require 'sinatra/reloader' if development?
 
 module Overwatch
   module Collection
     class Application < Sinatra::Base
+      # register Sinatra::Logger
       configure do
         set :app_file, __FILE__
         set :root, File.expand_path(File.join(File.dirname(__FILE__), "../../../"))
@@ -12,13 +14,17 @@ module Overwatch
         disable :show_exceptions
         disable :raise_errors, false
         set :server, %w[ thin mongrel webrick ]
-        set :logger_level, :info
+        # set :logger_level, :info
+        # set :logger_log_file, STDOUT
       end
       
       [ :development, :test].each do |env|
         configure(env) do
           enable :raise_errors
           enable :show_exceptions
+          enable :logging
+          set :logger_level, :info
+          set :logger_log_file, STDOUT
         end
       end
       

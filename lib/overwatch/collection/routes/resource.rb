@@ -8,7 +8,7 @@ module Overwatch
           [].to_json
         else
           status 200
-          resources.to_json# (:exclude => [ :created_at, :updated_at ])
+          resources.to_json # (:exclude => [ :created_at, :updated_at ])
         end
       end
       
@@ -16,7 +16,7 @@ module Overwatch
         resource = Resource.get(id) || Resource.first(:name => id)
         if resource
           status 200
-          resource.to_json# (:exclude => [ :created_at, :updated_at ])
+          resource.to_json # (:exclude => [ :created_at, :updated_at ])
         else
           status 404
           ["Not found"].to_json
@@ -26,13 +26,14 @@ module Overwatch
       
       post '/resources/?' do
         data = Yajl.load(request.body.read)
+        logger.info request.body.read
         resource = Resource.new(:name => data['name'])
         if resource.save
           status 201
           resource.to_json # (:exclude => [ :created_at, :updated_at ])
         else
           status 422
-          resource.errors.to_json
+          resource.errors.to_hash.to_json(:except => :errors)
         end
       end
 
@@ -42,14 +43,14 @@ module Overwatch
         if resource
           if resource.update(data)
             status 200
-            resource.to_json# (:exclude => [ :created_at, :updated_at ])
+            resource.to_json # (:exclude => [ :created_at, :updated_at ])
           else
             status 409
-            resource.errors.to_json
+            resource.errors.to_hash.to_json(:except => :errors)
           end
         else
           status 404
-          ["Not found"].to_json
+          ["Resource not found"].to_json
         end
           
       end
@@ -61,10 +62,11 @@ module Overwatch
             status 200
           else
             status 409
-            resource.errors.to_json
+            resource.errors.to_hash.to_json(:except => :errors)
           end
         else
-          halt 404
+          status 404
+          ["Resource not found"].to_json
         end
         
       end
@@ -80,7 +82,7 @@ module Overwatch
           end
         else
           status 404
-          ["Not found"].to_json
+          ["Resource not found"].to_json
         end
       end
       
