@@ -17,7 +17,7 @@ module Overwatch
         subject { last_response }
 
         it { should respond_with 200 }
-        it { should respond_with_content_type 'application/json' }
+#        it { should respond_with_content_type 'application/json' }
         it "should return an array of snapshots" do
           last_json.should have(5).items
         end
@@ -32,7 +32,7 @@ module Overwatch
         subject { last_response }
       
         it { should respond_with 200 }
-        it { should respond_with_content_type 'application/json' }
+#        it { should respond_with_content_type 'application/json' }
       
         it "should return one record" do
           resource.id.should == Yajl.load(last_response.body)['id']
@@ -47,7 +47,7 @@ module Overwatch
         subject { last_response }
         
         it { should respond_with 201 }
-        it { should respond_with_content_type 'application/json' }
+#        it { should respond_with_content_type 'application/json' }
         
         it "should create one snapshot" do
           resource.snapshots.should have(1).item
@@ -64,7 +64,7 @@ module Overwatch
         subject { last_response }
         
         it { should respond_with 200 }
-        it { should respond_with_content_type 'application/json' }
+#        it { should respond_with_content_type 'application/json' }
         
         it "should return full JSON of a given snapshot"
       end
@@ -78,7 +78,7 @@ module Overwatch
       #   subject { last_response }
       # 
       #   it { should respond_with 201 }
-      #   it { should respond_with_content_type 'application/json' }
+#      #   it { should respond_with_content_type 'application/json' }
       # end
       # 
       # describe "PUT /resources/:id" do
@@ -90,7 +90,7 @@ module Overwatch
       #   subject { last_response }
       # 
       #   it { should respond_with 200 }
-      #   it { should respond_with_content_type 'application/json' }
+#      #   it { should respond_with_content_type 'application/json' }
       # 
       #   it "should update the record" do
       #     Resource.get(resource.id).name.should == "bar"
@@ -107,7 +107,7 @@ module Overwatch
       #   subject { last_response }
       # 
       #   it { should respond_with 200 }
-      #   it { should respond_with_content_type 'application/json' }
+#      #   it { should respond_with_content_type 'application/json' }
       # 
       #   it "should delete record" do
       #     Resource.get(resource.id).should be_nil
@@ -124,7 +124,7 @@ module Overwatch
       #   subject { last_response }
       # 
       #   it { should respond_with 200 }
-      #   it { should respond_with_content_type 'application/json' }
+#      #   it { should respond_with_content_type 'application/json' }
       # 
       #   it "should return an array of available attributes" do
       #     attributes = Yajl.load(last_response.body)
@@ -145,7 +145,7 @@ module Overwatch
       #   subject { last_response }
       # 
       #   it { should respond_with 200 }
-      #   it { should respond_with_content_type 'application/json' }
+#      #   it { should respond_with_content_type 'application/json' }
       # 
       #   it "should return a hash of the attribute name and values" do
       #     values = Yajl.load(last_response.body)
