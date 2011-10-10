@@ -71,7 +71,7 @@ module Overwatch
         
       end
       
-      get '/resources/:id/attributes/?' do |id|
+      get '/resources/:id/keys/?' do |id|
         resource = Resource.get(id) || Resource.first(:name => id)
         if resource
           attributes = resource.attribute_keys
@@ -86,7 +86,7 @@ module Overwatch
         end
       end
       
-      get '/resources/:id/attributes/:attribute/?' do |id, attribute|
+      get '/resources/:id/keys/:attribute/?' do |id, attribute|
         resource = Resource.get(id) || Resource.first(:name => id)
         options = { 
           :start_at => params[:start_at].present? ? params[:start_at].to_i : "-inf",
@@ -97,7 +97,7 @@ module Overwatch
         values.to_json
       end
       
-      get '/resources/:id/attributes/:attribute/:function/?' do |id, attribute, function|
+      get '/resources/:id/keys/:attribute/:function/?' do |id, attribute, function|
         resource = Resource.get(id) || Resource.first(:name => id)
         
         options = { 
