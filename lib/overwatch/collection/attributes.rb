@@ -6,60 +6,6 @@ module Overwatch
         $redis.smembers("overwatch::resource:#{self.id}:attribute_keys").sort
       end
 
-      def average(attr, options={})
-        function(:average, attr, options)
-      end
-
-      def min(attr, options={})
-        function(:min, attr, options)
-      end
-
-      def max(attr, options={})
-        function(:max, attr, options)
-      end
-
-      def median(attr, options={})
-        function(:median, attr, options)
-      end
-
-      def first(attr, options={})
-        function(:first, attr, options)
-      end
-
-      def last(attr, options={})
-        function(:last, attr, options)
-      end
-
-      def function(func, attr, options={})
-        start_at = options[:start_at] || "-inf"
-        end_at = options[:end_at] || "+inf"
-        
-        case func
-        when :max
-          values_for(attr, options)[:data].max
-        when :min
-          values_for(attr, options)[:data].min
-        when :average
-          values = values_for(attr, options)[:data]
-          if is_a_number?(values.first)
-            values.map!(&:to_f)
-            values.inject(:+) / values.size
-          else
-            values.first
-          end
-        when :median
-          values = values_for(attr, options)[:data].sort
-          mid = values.size / 2
-          values[mid]
-        when :first
-          value = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", start_at, end_at)[0]
-          value.split(":")[1] rescue nil
-        when :last 
-          value = $redis.zrevrangebyscore("overwatch::resource:#{self.id}:#{attr}", end_at, start_at)[0]
-          value.split(":")[1] rescue nil
-        end
-      end
-
       def values_for(attr, options={})
         raise ArgumentError, "attribute does not exist" unless attribute_keys.include?(attr)
         start_at = options[:start_at] || "-inf"
@@ -83,7 +29,31 @@ module Overwatch
         else
           values
         end
-        { :name => attr, :data => values }#, :start_at => start_at, :end_at => end_at }
+
+        max = values.max
+        min = values.min
+        if is_a_number?(values.first)
+          average = (values.map(&:to_f).inject(:+)) / values.size
+        else
+          average = values.first
+        end
+        mid = values.size / 2
+        median = values.sort[mid]
+        first = $redis.zrangebyscore("overwatch::resource:#{self.id}:#{attr}", start_at, end_at)[0].split(":")[1] rescue nil
+        last = $redis.zrevrangebyscore("overwatch::resource:#{self.id}:#{attr}", end_at, start_at)[0].split(":")[1] rescue nil
+        
+        { 
+          :name => attr, 
+          :functions => {
+            :min => min,
+            :max => max,
+            :average => average,
+            :median => median,
+            :first => first,
+            :last => last
+          },
+          :data => values 
+        } #, :start_at => start_at, :end_at => end_at }
       end
 
       def is_a_number?(str)
@@ -123,7 +93,6 @@ module Overwatch
           end
         end
       end
-
 
       def top_level_attributes
         self.attribute_keys.map do |key|
